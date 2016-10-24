@@ -4,12 +4,12 @@ import org.openqa.selenium.WebDriver;
 import pageObjects.FBHomeObjects;
 import pageObjects.FBLoginObjects;
 import library.Browser;
-import library.Constants;
 import library.Methods;
 
 public class FBLogin  {
 
-	public static void main(String[] args)  {
+	public static boolean FBLoginMain(String user, String pass) throws InterruptedException  {
+		boolean returnValue = false;
 		// TODO Auto-generated method stub
 		FBLoginObjects fblogin = new FBLoginObjects();
 		FBHomeObjects fbhome = new FBHomeObjects();
@@ -18,14 +18,24 @@ public class FBLogin  {
 		
 		String sURL = "https://www.facebook.com";
 		WebDriver driver = br.OpenURL("Chrome", sURL);
-		
-		mt.SetTextField(driver, fblogin.txtbEmail, Constants.fbUsername);
-		mt.SetTextField(driver, fblogin.txtbPass, Constants.fbWrongPassword);
-		mt.ButtonClick(driver, fblogin.btnLogin);
+		Thread.sleep(2000);
+		try {
+			mt.SetTextField(driver, fblogin.txtbEmail, user);
+			mt.SetTextField(driver, fblogin.txtbPass, pass);
+			mt.ButtonClick(driver, fblogin.btnLogin);
 		 	
 		// Check if fb is now in homepage
-		if (mt.GetElementCount(driver, fbhome.linkAvatar) == 0)
-			throw new RuntimeException("Test not implemented");
+			if (mt.GetElementCount(driver, fbhome.linkAvatar) > 0)
+				returnValue = true;
+			
+			driver.close();
+			driver.quit();
+			
+			return returnValue;
+		} catch (Exception e) {
+			driver.close();
+			driver.quit();
+			return false;
+		}
 	}
-
 }
