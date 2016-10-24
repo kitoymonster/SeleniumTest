@@ -1,10 +1,10 @@
 package testCases;
 import org.openqa.selenium.WebDriver;
 
-import pageObjects.Constants;
 import pageObjects.FBHomeObjects;
 import pageObjects.FBLoginObjects;
 import library.Browser;
+import library.Constants;
 import library.Methods;
 
 public class FBLogin  {

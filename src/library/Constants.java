@@ -1,4 +1,4 @@
-package pageObjects;
+package library;
 
 public class Constants {
 	public static final String fbUsername = "qtp.assessment.1@gmx.com";
