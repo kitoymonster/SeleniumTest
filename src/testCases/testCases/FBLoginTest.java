@@ -1,27 +1,24 @@
 package testCases.testCases;
 
-import org.testng.ITestResult;
-import org.testng.Reporter;
 import org.testng.annotations.Test;
+import org.testng.AssertJUnit;
 import library.Constants;
 import testCases.FBLogin;
 
 public class FBLoginTest {
-
+	public boolean bResult;
+	
 	@Test
 	public void LoginFail() throws InterruptedException {
-		if (!FBLogin.FBLoginMain(Constants.fbUsername, Constants.fbWrongPassword))
-			Reporter.getCurrentTestResult().setStatus(ITestResult.FAILURE);
-		else
-			Reporter.getCurrentTestResult().setStatus(ITestResult.SUCCESS);
+		bResult = FBLogin.Login("chrome", Constants.fbURL, Constants.fbUsername, Constants.fbWrongPassword);
+		AssertJUnit.assertFalse(bResult);
 	}
 	
 	@Test
 	public void LoginPass() throws InterruptedException {
-		if (FBLogin.FBLoginMain(Constants.fbUsername, Constants.fbPassword))
-			Reporter.getCurrentTestResult().setStatus(ITestResult.SUCCESS);
-		else
-			Reporter.getCurrentTestResult().setStatus(ITestResult.FAILURE);
+		bResult = FBLogin.Login("chrome", Constants.fbURL, Constants.fbUsername, Constants.fbPassword);
+		AssertJUnit.assertTrue(bResult);
 			
 	}
+	
 }

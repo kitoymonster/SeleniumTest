@@ -4,21 +4,21 @@ import org.openqa.selenium.WebDriver;
 import pageObjects.FBHomeObjects;
 import pageObjects.FBLoginObjects;
 import library.Browser;
+import library.Constants;
 import library.Methods;
 
 public class FBLogin  {
 
-	public static boolean FBLoginMain(String user, String pass) throws InterruptedException  {
-		boolean returnValue = false;
+	public static boolean Login(String browserName, String sURL, String user, String pass) throws InterruptedException  {
+		boolean returnValue = Constants.SELENIUM_FAILED;
 		// TODO Auto-generated method stub
 		FBLoginObjects fblogin = new FBLoginObjects();
 		FBHomeObjects fbhome = new FBHomeObjects();
 		Browser br = new Browser();
 		Methods mt = new Methods();
 		
-		String sURL = "https://www.facebook.com";
-		WebDriver driver = br.OpenURL("Chrome", sURL);
-		Thread.sleep(2000);
+		WebDriver driver = br.OpenURL(browserName, sURL);
+		Thread.sleep(5000);
 		try {
 			mt.SetTextField(driver, fblogin.txtbEmail, user);
 			mt.SetTextField(driver, fblogin.txtbPass, pass);
@@ -26,16 +26,16 @@ public class FBLogin  {
 		 	
 		// Check if fb is now in homepage
 			if (mt.GetElementCount(driver, fbhome.linkAvatar) > 0)
-				returnValue = true;
+				returnValue = Constants.SELENIUM_PASSED;
 			
 			driver.close();
 			driver.quit();
-			
-			return returnValue;
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			driver.close();
 			driver.quit();
-			return false;
 		}
+		
+		return returnValue;
 	}
 }
